@@ -1,0 +1,148 @@
+@charset "utf-8";
+/* CSS Document */
+.aligncenter {
+    text-align: center;
+}
+/* Add a black background color to the top navigation */
+.topnav {
+  position: relative;
+  background-color: gray;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: lightgray;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: black;
+  color: white;
+}
+
+/* Centered section inside the top navigation */
+.topnav-centered a {
+  float: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Right-aligned section inside the top navigation */
+.topnav-right {
+  float: right;
+}
+
+/* Responsive navigation menu - display links on top of each other instead of next to each other (for mobile devices) */
+@media screen and (max-width: 600px) {
+  .topnav a, .topnav-right {
+    float: none;
+    display: block;
+  }
+
+  .topnav-centered a {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+  }
+}
+
+h1 {
+  margin-bottom: 2rem;
+}
+
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Force 2 columns */
+  grid-template-rows: repeat(2, auto);   /* 2 rows based on content */
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.album img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.album:hover img {
+  transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+  .album-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+body {
+	background-position:center;
+	background-image: none;
+	background-repeat: no-repeat;
+	background-color: antiquewhite;
+	background-size: cover;
+	background-attachment: fixed;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+footer {
+        background-color: black;
+        color: grey;
+        padding: 0px;
+        text-align: center;
+		font-size: 18;
+    }
+    .footer-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+    .footer-section {
+        flex: 1;
+        min-width: 100px;
+		max-width: 250px;
+        margin: 5px;
+    }
+    .footer-section h2 {
+        margin-bottom: 10px;
+    }
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+    }
+    .footer-section ul li {
+        margin: 5px 0;
+    }
+    .footer-section a {
+        color: white;
+        text-decoration: none;
+    }
+    .footer-section a:hover {
+        text-decoration: underline;
+    }
+    .footer-bottom {
+        margin-top: 20px;
+    }
