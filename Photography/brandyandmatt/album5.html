@@ -1,0 +1,249 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="description" content="branding, photography, marketing">
+<meta name="keywords" content="artisan home goods, branding, photography, marketing">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="author" content="Jonathan Escobedo">
+<link rel="stylesheet" type="text/css" href="../../jamcss.css">
+<link rel="icon" type="image/png" href="../../Resources/Images/icon.png">
+<title>Brandy and Matthew</title>
+<style type="text/css">
+body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+:root {
+      --bg: #f9f9f9;
+      --text: #111;
+    }
+
+    body.dark {
+      --bg: #111;
+      --text: #f9f9f9;
+	}
+	body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 8px 14px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      justify-items: center;
+    }
+
+    .gallery img {
+      width: 300px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      border-radius: 8px;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-color: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .overlay img {
+      max-width: 90%;
+      max-height: 80vh;
+      margin-bottom: 15px;
+      border-radius: 10px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 30px;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .download-btn {
+      color: white;
+      background-color: #444;
+      padding: 8px 12px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .download-btn:hover {
+      background-color: #666;
+    }
+
+    @media (max-width: 1000px) {
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+    }
+</style>
+</head>
+<body>
+<img src="../../CSS/Images/Header.png" alt="logo" width="100%">
+<!-- Top navigation -->
+<div class="topnav">
+
+  <!-- Centered link -->
+  <div class="topnav-centered">
+    <a href="../../home.html" class="active">Home</a>
+  </div>
+
+  <!-- Left-aligned links (default) -->
+  <a href="../../products.html">Products</a>
+  <a href="../../services.html">Services</a>
+
+  <!-- Right-aligned links -->
+  <div class="topnav-right">
+    <a href="../../about.html">About</a>
+    <a href="../../contact.html">Contact</a>
+  </div>
+
+</div>
+
+
+  <div class="top-bar">
+    <h1>Photography Gallery</h1>
+    <button id="toggleTheme">Toggle Dark Mode</button>
+  </div>
+
+  <div class="gallery" id="gallery"></div>
+
+  <div class="overlay" id="overlay">
+    <span class="close-btn" id="closeBtn">&times;</span>
+    <img id="overlayImg" src="" alt="Full Image" />
+    <a id="downloadLink" class="download-btn" href="#" download>Download Image</a>
+  </div>
+
+  <script>
+    // Simple password protection
+    const correctPassword = "turtle";
+    const enteredPassword = prompt("Please enter the gallery password:");
+    if (enteredPassword !== correctPassword) {
+      alert("Incorrect password. Access denied.");
+      document.body.innerHTML = "<h2 style='text-align:center; margin-top: 100px;'>Access Denied</h2>";
+      throw new Error("Unauthorized access");
+    }
+
+    // Generate image list: photo1.jpg to photo65.jpg
+    const imageList = [];
+    for (let i = 1; i <= 62; i++) {
+      imageList.push(`photo${i}.jpg`);
+    }
+
+    const gallery = document.getElementById("gallery");
+
+    imageList.forEach(filename => {
+      const img = document.createElement("img");
+      img.src = `images/${filename}`; // thumbnail
+      img.alt = filename;
+      img.dataset.fullres = `fullres/${filename}`; // link to full res
+      gallery.appendChild(img);
+    });
+
+    const overlay = document.getElementById("overlay");
+    const overlayImg = document.getElementById("overlayImg");
+    const closeBtn = document.getElementById("closeBtn");
+    const downloadLink = document.getElementById("downloadLink");
+
+    gallery.addEventListener("click", (e) => {
+      if (e.target.tagName === "IMG") {
+        const fullSrc = e.target.dataset.fullres;
+        overlay.style.display = "flex";
+        overlayImg.src = fullSrc;
+        overlayImg.alt = e.target.alt;
+        downloadLink.href = fullSrc;
+      }
+    });
+
+    closeBtn.addEventListener("click", () => {
+      overlay.style.display = "none";
+      overlayImg.src = "";
+    });
+
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay || e.target === closeBtn) {
+        overlay.style.display = "none";
+        overlayImg.src = "";
+      }
+    });
+
+    // Dark mode toggle
+    const toggleBtn = document.getElementById("toggleTheme");
+    toggleBtn.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+    });
+  </script>
+	
+	
+	<footer>
+    <div class="footer-container">
+            <div class="footer-section">
+            <h4>Navigation</h4>
+            <ul>
+				<li><a href="../../home.html">Home</a></li><br>
+  				<li><a href="../../products.html">Products</a></li><br>
+				<li><a href="../../Services.html">Services</a></li><br>
+				<li><a href="../../About.html">About</a></li><br>
+                <li><a href="../../Contact.html">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Follow</h4>
+            <ul>
+                <li><a href="https://www.facebook.com/people/J-and-A-Masterpieces-LLC/61577099068316/" target="_blank">Facebook</a></li><br>
+                <li><a href="https://x.com/jamasterpieces" target="_blank">Twitter/X</a></li><br>
+                <li><a href="https://www.instagram.com/jamasterpieces/" target="_blank">Instagram</a></li><br>
+				<li><a href="https://www.youtube.com/@JAMasterpieces" target="_blank">YouTube</a></li><br>
+                <li><a href="#" target="_blank">LinkedIn</a></li><br>
+				</ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+    </div>
+</footer>
+</body>
+</html>
